@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/core/extensions/theme_extension.dart';
 
 class MovieCarousselItem extends StatelessWidget {
   final String url;
@@ -15,45 +16,68 @@ class MovieCarousselItem extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
+        SizedBox(
           width: 200,
           height: 250,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              image: DecorationImage(
-                image: NetworkImage(url),
-                fit: BoxFit.fitWidth,
-              )),
-          child: Center(
-            child: Material(
-              color: Colors.amber,
-              borderRadius: BorderRadius.circular(16),
-              child: InkWell(
-                onTap: () {},
+          child: Stack(
+            children: [
+              ClipRRect(
                 borderRadius: BorderRadius.circular(16),
-                child: const SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: Icon(
-                    Icons.play_circle,
-                    color: Colors.white,
-                    size: 22,
+                child: Image.network(
+                  url,
+                  width: 200,
+                  height: 250,
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+              Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.centerRight,
+                        end: Alignment.topLeft,
+                        colors: [
+                          Color(0xFFB68D4A),
+                          Color(0xffedd0a1),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+              Center(
+                child: Material(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(16),
+                  child: InkWell(
+                    onTap: () {},
+                    borderRadius: BorderRadius.circular(16),
+                    child: const SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: Icon(
+                        Icons.play_circle,
+                        color: Colors.white,
+                        size: 22,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         const SizedBox(
           height: 20,
         ),
-        const Text(
+        Text(
           "Nome do filme",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 26,
-          ),
-        )
+          style: context.headlineLarge,
+        ),
       ],
     );
   }

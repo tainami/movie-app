@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/core/extensions/theme_extension.dart';
 
 class UserAvatar extends StatelessWidget {
   const UserAvatar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       children: [
-        SizedBox(
+        const SizedBox(
           width: 50,
           height: 50,
           child: CircleAvatar(
@@ -16,13 +17,13 @@ class UserAvatar extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(width: 15),
+        const SizedBox(width: 15),
         SizedBox(
           width: 100,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Hello,',
                 style: TextStyle(
                   color: Color(0xFFAB947B),
@@ -31,11 +32,7 @@ class UserAvatar extends StatelessWidget {
               ),
               Text(
                 'Nome',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: context.headlineSmall,
               ),
             ],
           ),
