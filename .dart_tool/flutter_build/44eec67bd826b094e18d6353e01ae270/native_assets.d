@@ -1,0 +1,1 @@
+ /Users/tainamiria/Documents/projetos-flutter/movie-app/.dart_tool/flutter_build/44eec67bd826b094e18d6353e01ae270/native_assets.yaml: 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
+import 'package:movie_app/core/extensions/media_query_extension.dart';
 import 'package:movie_app/core/extensions/theme_extension.dart';
+import 'package:movie_app/core/theme/spacing.dart';
 import 'package:movie_app/widgets/movie_card.dart';
 
 class MovieCourossel extends StatelessWidget {
@@ -24,11 +25,12 @@ class MovieCourossel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: Row(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
@@ -41,37 +43,34 @@ class MovieCourossel extends StatelessWidget {
               ),
             ],
           ),
-        ),
-        FlutterCarousel.builder(
-          options: FlutterCarouselOptions(
-            autoPlay: false,
-            height: MediaQuery.of(context).size.height * 0.4,
-            showIndicator: false,
-            viewportFraction: 0.42,
-            enableInfiniteScroll: false,
-            padEnds: false,
+          const SizedBox(
+            height: Spacing.m10,
           ),
-          itemCount: imageUrls.length,
-          itemBuilder: (
-            BuildContext context,
-            int itemIndex,
-            int pageViewIndex,
-          ) {
-            return Container(
-              alignment: Alignment.center,
-              child: size == "large"
-                  ? MovieCard.large(
-                      url: imageUrls[itemIndex],
-                      id: itemIndex,
-                    )
-                  : MovieCard.mini(
-                      url: imageUrls[itemIndex],
-                      id: itemIndex,
-                    ),
-            );
-          },
-        ),
-      ],
+          SizedBox(
+            height: context.percentHeight(0.3),
+            child: ListView.builder(
+              itemCount: imageUrls.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (
+                BuildContext context,
+                int itemIndex,
+              ) {
+                return Container(
+                  child: size == "large"
+                      ? MovieCard.large(
+                          url: imageUrls[itemIndex],
+                          id: itemIndex,
+                        )
+                      : MovieCard.mini(
+                          url: imageUrls[itemIndex],
+                          id: itemIndex,
+                        ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

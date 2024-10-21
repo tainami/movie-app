@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/core/theme/app_colors.dart';
 
 class NotificationIcon extends StatelessWidget {
   const NotificationIcon({super.key});
@@ -10,11 +11,11 @@ class NotificationIcon extends StatelessWidget {
       height: 40,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: const Color(0xBFAB947B),
+        color: AppColors.primary,
       ),
       child: const Icon(
         Icons.notifications,
-        color: Colors.white,
+        color: AppColors.light,
         size: 20,
       ),
     );

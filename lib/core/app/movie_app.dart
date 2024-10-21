@@ -12,8 +12,10 @@ class MyApp extends StatelessWidget {
       theme: MovieThemeData.secondary(),
       darkTheme: MovieThemeData.primary(),
       themeMode: ThemeMode.dark,
+      initialRoute: "/",
       routes: {
         "/": (context) => const HomeScreen(),
+        "/movies-details": (context) => const HomeScreen(),
       },
     );
   }

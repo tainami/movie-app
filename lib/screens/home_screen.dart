@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
+import 'package:movie_app/core/theme/spacing.dart';
 import 'package:movie_app/widgets/gradient_background.dart';
 import 'package:movie_app/widgets/movie_caroussel_item.dart';
 import 'package:movie_app/widgets/movie_carrousel.dart';
@@ -55,6 +56,9 @@ class HomeScreen extends StatelessWidget {
                     );
                   },
                 ),
+                const SizedBox(
+                  height: Spacing.x16,
+                ),
                 const MovieCourossel.large(
                   imageUrls: [
                     "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
@@ -63,7 +67,22 @@ class HomeScreen extends StatelessWidget {
                     "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
                   ],
                   title: "Recent",
-                )
+                ),
+                const SizedBox(
+                  height: Spacing.x16,
+                ),
+                const MovieCourossel.large(
+                  imageUrls: [
+                    "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
+                    "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
+                    "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
+                    "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
+                  ],
+                  title: "My Favorites",
+                ),
+                const SizedBox(
+                  height: Spacing.xxm32,
+                ),
               ],
             ),
           ),
