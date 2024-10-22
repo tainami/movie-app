@@ -80,6 +80,12 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "font_awesome_flutter",
+      "rootUri": "file:///Users/tainamiria/.pub-cache/hosted/pub.dev/font_awesome_flutter-10.7.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "google_fonts",
       "rootUri": "file:///Users/tainamiria/.pub-cache/hosted/pub.dev/google_fonts-6.2.1",
       "packageUri": "lib/",
@@ -269,10 +275,10 @@
       "name": "movie_app",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "3.5"
+      "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-10-21T13:18:31.679647Z",
+  "generated": "2024-10-22T17:43:03.295933Z",
   "generator": "pub",
   "generatorVersion": "3.5.3",
   "flutterRoot": "file:///opt/homebrew/Caskroom/flutter/3.24.3/flutter",

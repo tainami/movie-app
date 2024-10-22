@@ -30,12 +30,12 @@ class MovieThemeData {
       ),
       textTheme: TextTheme(
         headlineLarge: GoogleFonts.workSans(
-          fontSize: 26,
+          fontSize: 44,
           fontWeight: FontWeight.w600,
           color: AppColors.light,
         ),
         headlineMedium: GoogleFonts.workSans(
-          fontSize: 22,
+          fontSize: 26,
           fontWeight: FontWeight.w600,
           color: AppColors.light,
         ),

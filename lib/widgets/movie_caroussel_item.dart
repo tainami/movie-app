@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/core/extensions/theme_extension.dart';
 import 'package:movie_app/core/theme/spacing.dart';
+import 'package:movie_app/screens/movie_detail_screen.dart';
 
 class MovieCarousselItem extends StatelessWidget {
   final String url;
@@ -55,7 +56,14 @@ class MovieCarousselItem extends StatelessWidget {
                   color: Colors.transparent,
                   borderRadius: BorderRadius.circular(16),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MovieDetailScreen(),
+                        ),
+                      );
+                    },
                     borderRadius: BorderRadius.circular(16),
                     child: const SizedBox(
                       width: 50,
@@ -77,7 +85,7 @@ class MovieCarousselItem extends StatelessWidget {
         ),
         Text(
           "Nome do filme",
-          style: context.headlineLarge,
+          style: context.headlineMedium,
         ),
       ],
     );
