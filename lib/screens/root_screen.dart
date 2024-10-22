@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/screens/home_screen.dart';
 import 'package:movie_app/screens/search_screen.dart';
+import 'package:movie_app/widgets/custom_botttom_bar.dart';
+
+class RootScreenControllers {
+  static ScrollController homeScrollController = ScrollController();
+  static ScrollController searchScrollController = ScrollController();
+}
 
 class RootScreen extends StatefulWidget {
   const RootScreen({super.key});
@@ -48,41 +53,14 @@ class _RootScreenState extends State<RootScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: ValueListenableBuilder(
-                valueListenable: currentIndex,
-                builder: (context, index, child) {
-                  return PhysicalModel(
-                    color: Colors.transparent,
-                    elevation: 10,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.lowBlack.withOpacity(0.9),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      height: kBottomNavigationBarHeight + 36,
-                      margin:
-                          const EdgeInsets.only(bottom: 20, left: 8, right: 8),
-                      child: Center(
-                        child: BottomNavigationBar(
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          currentIndex: index,
-                          onTap: onTabChange,
-                          type: BottomNavigationBarType.fixed,
-                          items: const [
-                            BottomNavigationBarItem(
-                              icon: Icon(Icons.home),
-                              label: "Home",
-                            ),
-                            BottomNavigationBarItem(
-                              icon: Icon(Icons.search),
-                              label: "Search",
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                }),
+              valueListenable: currentIndex,
+              builder: (context, index, child) {
+                return CustomBottomBart(
+                  currentIndex: index,
+                  onTabChange: onTabChange,
+                );
+              },
+            ),
           ),
         ],
       ),

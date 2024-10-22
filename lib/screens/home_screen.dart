@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:movie_app/core/theme/spacing.dart';
+import 'package:movie_app/screens/root_screen.dart';
 import 'package:movie_app/widgets/gradient_background.dart';
 import 'package:movie_app/widgets/movie_caroussel_item.dart';
 import 'package:movie_app/widgets/movie_carrousel.dart';
@@ -17,6 +18,7 @@ class HomeScreen extends StatelessWidget {
         children: [
           const GradientBackground(),
           SingleChildScrollView(
+            controller: RootScreenControllers.homeScrollController,
             child: Column(
               children: [
                 AppBar(
@@ -81,7 +83,7 @@ class HomeScreen extends StatelessWidget {
                   title: "My Favorites",
                 ),
                 const SizedBox(
-                  height: Spacing.xxm32,
+                  height: Spacing.xxm32 + kBottomNavigationBarHeight,
                 ),
               ],
             ),
