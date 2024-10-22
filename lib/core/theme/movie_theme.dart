@@ -8,6 +8,26 @@ class MovieThemeData {
       useMaterial3: true,
       primaryColor: AppColors.primary,
       scaffoldBackgroundColor: AppColors.backgroundPlus,
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        selectedLabelStyle: TextStyle(
+          color: AppColors.light,
+        ),
+        unselectedLabelStyle: TextStyle(
+          color: AppColors.regularGray,
+        ),
+        selectedIconTheme: IconThemeData(
+          size: 24,
+          color: AppColors.light,
+        ),
+        unselectedIconTheme: IconThemeData(
+          size: 24,
+          color: AppColors.regularGray,
+        ),
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        selectedItemColor: AppColors.light,
+        unselectedItemColor: AppColors.regularGray,
+      ),
       textTheme: TextTheme(
         headlineLarge: GoogleFonts.workSans(
           fontSize: 26,

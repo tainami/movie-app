@@ -9,7 +9,7 @@ class MovieCard extends StatelessWidget {
 
   const MovieCard.mini({
     super.key,
-    this.height = 150,
+    this.height = 100,
     this.width = 100,
     required this.url,
     required this.id,
@@ -17,8 +17,8 @@ class MovieCard extends StatelessWidget {
 
   const MovieCard.large({
     super.key,
-    this.height = 210,
-    this.width = 150,
+    this.height = 100,
+    this.width = 140,
     required this.url,
     required this.id,
   });

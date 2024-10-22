@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/core/theme/movie_theme.dart';
 import 'package:movie_app/screens/home_screen.dart';
+import 'package:movie_app/screens/movie_detail_screen.dart';
+import 'package:movie_app/screens/root_screen.dart';
+import 'package:movie_app/screens/search_screen.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -14,8 +17,10 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.dark,
       initialRoute: "/",
       routes: {
-        "/": (context) => const HomeScreen(),
-        "/movies-details": (context) => const HomeScreen(),
+        "/": (context) => const RootScreen(),
+        "/home": (context) => const HomeScreen(),
+        "/search": (context) => const SearchScreen(),
+        "/movie-detail": (context) => const MovieDetailScreen(),
       },
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/core/extensions/theme_extension.dart';
+import 'package:movie_app/core/theme/spacing.dart';
 
 class MovieCarousselItem extends StatelessWidget {
   final String url;
@@ -72,7 +73,7 @@ class MovieCarousselItem extends StatelessWidget {
           ),
         ),
         const SizedBox(
-          height: 20,
+          height: Spacing.xs20,
         ),
         Text(
           "Nome do filme",
