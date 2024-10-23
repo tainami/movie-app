@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
+import 'package:movie_app/core/extensions/media_query_extension.dart';
 import 'package:movie_app/core/theme/spacing.dart';
 import 'package:movie_app/screens/root_screen.dart';
 import 'package:movie_app/widgets/gradient_background.dart';
@@ -33,58 +34,66 @@ class HomeScreen extends StatelessWidget {
                   backgroundColor: Colors.transparent,
                   elevation: 0,
                 ),
-                FlutterCarousel.builder(
-                  options: FlutterCarouselOptions(
-                    indicatorMargin: 0,
-                    autoPlay: true,
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    showIndicator: true,
-                    slideIndicator: CircularSlideIndicator(
-                      slideIndicatorOptions: const SlideIndicatorOptions(
-                        indicatorRadius: 5,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: [
+                      FlutterCarousel.builder(
+                        options: FlutterCarouselOptions(
+                          indicatorMargin: 0,
+                          autoPlay: true,
+                          height: context
+                              .percentHeight(context.height > 700 ? 0.4 : 0.6),
+                          showIndicator: true,
+                          slideIndicator: CircularSlideIndicator(
+                            slideIndicatorOptions: const SlideIndicatorOptions(
+                              indicatorRadius: 5,
+                            ),
+                          ),
+                        ),
+                        itemCount: 5,
+                        itemBuilder: (
+                          BuildContext context,
+                          int itemIndex,
+                          int pageViewIndex,
+                        ) {
+                          return const MovieCarousselItem(
+                            url:
+                                "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
+                            id: 0,
+                          );
+                        },
                       ),
-                    ),
-                  ),
-                  itemCount: 5,
-                  itemBuilder: (
-                    BuildContext context,
-                    int itemIndex,
-                    int pageViewIndex,
-                  ) {
-                    return const MovieCarousselItem(
-                      url:
+                      const SizedBox(
+                        height: Spacing.x16,
+                      ),
+                      const MovieCourossel.large(
+                        imageUrls: [
                           "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
-                      id: 0,
-                    );
-                  },
-                ),
-                const SizedBox(
-                  height: Spacing.x16,
-                ),
-                const MovieCourossel.large(
-                  imageUrls: [
-                    "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
-                    "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
-                    "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
-                    "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
-                  ],
-                  title: "Recent",
-                ),
-                const SizedBox(
-                  height: Spacing.x16,
-                ),
-                const MovieCourossel.large(
-                  imageUrls: [
-                    "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
-                    "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
-                    "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
-                    "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
-                  ],
-                  title: "My Favorites",
-                ),
-                const SizedBox(
-                  height: Spacing.xxm32 + kBottomNavigationBarHeight,
-                ),
+                          "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
+                          "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
+                          "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
+                        ],
+                        title: "Recent",
+                      ),
+                      const SizedBox(
+                        height: Spacing.x16,
+                      ),
+                      const MovieCourossel.large(
+                        imageUrls: [
+                          "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
+                          "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
+                          "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
+                          "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
+                        ],
+                        title: "My Favorites",
+                      ),
+                      const SizedBox(
+                        height: Spacing.xxm32 + kBottomNavigationBarHeight,
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),

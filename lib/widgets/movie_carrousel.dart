@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/core/extensions/media_query_extension.dart';
 import 'package:movie_app/core/extensions/theme_extension.dart';
 import 'package:movie_app/core/theme/spacing.dart';
 import 'package:movie_app/widgets/movie_card.dart';
@@ -26,7 +25,7 @@ class MovieCourossel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -47,9 +46,7 @@ class MovieCourossel extends StatelessWidget {
             height: Spacing.m10,
           ),
           SizedBox(
-            height: size == "large"
-                ? context.percentHeight(0.23)
-                : context.percentHeight(0.16),
+            height: size == "large" ? 200 : 120,
             child: ListView.builder(
               itemCount: imageUrls.length,
               scrollDirection: Axis.horizontal,

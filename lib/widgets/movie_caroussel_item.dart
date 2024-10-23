@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/core/extensions/theme_extension.dart';
 import 'package:movie_app/core/theme/spacing.dart';
-import 'package:movie_app/screens/movie_detail_screen.dart';
 
 class MovieCarousselItem extends StatelessWidget {
   final String url;
@@ -57,12 +56,7 @@ class MovieCarousselItem extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                   child: InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MovieDetailScreen(),
-                        ),
-                      );
+                      Navigator.pushNamed(context, "/movie-detail");
                     },
                     borderRadius: BorderRadius.circular(16),
                     child: const SizedBox(

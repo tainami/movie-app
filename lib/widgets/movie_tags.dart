@@ -21,7 +21,7 @@ class MovieTags extends StatelessWidget {
             height: 30,
             padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.3),
+              color: AppColors.primary.withOpacity(0.6),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Text(tag),
