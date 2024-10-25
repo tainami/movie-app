@@ -4,7 +4,7 @@ class AppColors {
   static const Color light = Colors.white;
   static const Color backgroundPlus = Color.fromARGB(255, 249, 249, 249);
   static const Color lightPlus1 = Color(0xFFFCF6F6);
-  static const Color primary = Color(0xBFAB947B);
+  static const Color primary = Color.fromARGB(190, 176, 153, 128);
 
   // COMMON
   static const Color statusGray = Color(0xFF727273);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
+import 'package:movie_app/core/theme/color_helper.dart';
 
 class MovieThemeData {
   static ThemeData primary() {
@@ -8,6 +9,19 @@ class MovieThemeData {
       useMaterial3: true,
       primaryColor: AppColors.primary,
       scaffoldBackgroundColor: AppColors.backgroundPlus,
+      colorScheme: ColorScheme.fromSwatch(
+        primarySwatch: ColorHelper.setMaterialColor(
+          AppColors.primary,
+        ),
+      ),
+      textSelectionTheme: const TextSelectionThemeData(
+        cursorColor: AppColors.primary,
+        selectionColor: AppColors.primary,
+        selectionHandleColor: AppColors.primary,
+      ),
+      inputDecorationTheme: const InputDecorationTheme(
+        border: OutlineInputBorder(),
+      ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         selectedLabelStyle: TextStyle(
           color: AppColors.light,

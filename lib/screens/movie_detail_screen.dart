@@ -4,6 +4,7 @@ import 'package:movie_app/core/extensions/theme_extension.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/spacing.dart';
 import 'package:movie_app/widgets/movie_carrousel.dart';
+import 'package:movie_app/widgets/movie_detail_background.dart';
 import 'package:movie_app/widgets/movie_tags.dart';
 
 class MovieDetailScreen extends StatelessWidget {
@@ -15,29 +16,9 @@ class MovieDetailScreen extends StatelessWidget {
       backgroundColor: AppColors.dark,
       body: Stack(
         children: [
-          Image.network(
-            "https://image.tmdb.org/t/p/original/mOwx1M7jp0Om598DsBD0AxbwH0m.jpg",
-            fit: BoxFit.cover,
-            width: double.infinity,
-          ),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.6,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    const Color(0xFF000000),
-                    const Color(0xFF1C1B1B).withOpacity(0.9),
-                    const Color(0xFF1C1B1B).withOpacity(0.5),
-                    Colors.transparent,
-                  ],
-                  begin: const Alignment(0.0, 0.1),
-                  end: const Alignment(0.0, -0.9),
-                ),
-              ),
-            ),
+          const MovieDetailBackground(
+            imageUrl:
+                "https://image.tmdb.org/t/p/original/mOwx1M7jp0Om598DsBD0AxbwH0m.jpg",
           ),
           Scaffold(
             backgroundColor: Colors.transparent,

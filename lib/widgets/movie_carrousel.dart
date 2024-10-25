@@ -46,7 +46,9 @@ class MovieCourossel extends StatelessWidget {
             height: Spacing.m10,
           ),
           SizedBox(
-            height: size == "large" ? 200 : 120,
+            height: size == "large"
+                ? MovieCardContraints.movieCardHeightLarge
+                : MovieCardContraints.movieCardHeightMini,
             child: ListView.builder(
               itemCount: imageUrls.length,
               scrollDirection: Axis.horizontal,

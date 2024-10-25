@@ -18,4 +18,15 @@ class AppGradients {
       Color(0xffedd0a1),
     ],
   );
+
+  static LinearGradient darkGradient = LinearGradient(
+    colors: [
+      const Color(0xFF1C1B1B),
+      const Color(0xFF1C1B1B).withOpacity(0.9),
+      const Color(0xFF1C1B1B).withOpacity(0.6),
+      Colors.transparent,
+    ],
+    begin: const Alignment(0.0, 0.4),
+    end: const Alignment(0.0, -0.8),
+  );
 }
