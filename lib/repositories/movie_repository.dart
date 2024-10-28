@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:movie_app/core/app_error.dart';
-import 'package:movie_app/models/movie_model.dart';
+import 'package:movie_app/core/constants/app_token.dart';
+import 'package:movie_app/models/list_movie_model.dart';
 
 abstract class MovieRepository {
-  Future<(List<MovieModel>?, AppError?)> getMovies();
+  Future<(List<ListMovieModel>?, AppError?)> getPopularMovies();
 }
 
 class MovieRepositoryImpl implements MovieRepository {
@@ -12,15 +13,21 @@ class MovieRepositoryImpl implements MovieRepository {
   MovieRepositoryImpl(this.dio);
 
   @override
-  Future<(List<MovieModel>?, AppError?)> getMovies() async {
+  Future<(List<ListMovieModel>?, AppError?)> getPopularMovies() async {
     try {
       final response = await dio.get(
-        "https://jsonplaceholder.typicode.com/users",
-      );
-      final data = response.data as List;
-      final List<MovieModel> movies = data.map((u) {
-        return MovieModel.fromMap(u);
-      }).toList();
+          "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
+          options: Options(headers: <String, dynamic>{
+            'Authorization': 'Bearer ${AppToken.token}',
+            'content-type': 'application/json',
+          }));
+      final data = response.data["results"] as List;
+      final List<ListMovieModel> movies = data
+          .map((u) {
+            return ListMovieModel.fromMap(u);
+          })
+          .take(5)
+          .toList();
       return (movies, null);
     } on DioException {
       return (

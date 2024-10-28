@@ -1,0 +1,4 @@
+class AppToken {
+  static const String token =
+      "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZjA3OGY2MGY5ZjJhZTk2NmIxNTU5ZDU0NzIxZmY0NyIsIm5iZiI6MTczMDExODE2MS41MDc2MTksInN1YiI6IjY2ZmZjYzBlZTg0ZWViMzVhMGY4MGRiMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UB55U_hwTCiajPUVeh3F0XPkpuYkA3YOpY68ft1gXoE";
+}

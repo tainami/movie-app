@@ -1,16 +1,32 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
-import 'package:movie_app/core/extensions/media_query_extension.dart';
 import 'package:movie_app/core/theme/spacing.dart';
+import 'package:movie_app/repositories/movie_repository.dart';
 import 'package:movie_app/screens/root_screen.dart';
+import 'package:movie_app/store/movie_state.dart';
+import 'package:movie_app/store/movie_store.dart';
 import 'package:movie_app/widgets/gradient_background.dart';
-import 'package:movie_app/widgets/movie_caroussel_item.dart';
-import 'package:movie_app/widgets/movie_carrousel.dart';
+import 'package:movie_app/widgets/movie_carousel.dart';
 import 'package:movie_app/widgets/notification_icon.dart';
+import 'package:movie_app/widgets/popular_movie_carousel.dart';
 import 'package:movie_app/widgets/user_avatar.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late final MovieStore store;
+
+  @override
+  void initState() {
+    super.initState();
+    store = MovieStore(MovieRepositoryImpl(Dio()));
+    store.getPopularMovies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,36 +54,32 @@ class HomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     children: [
-                      FlutterCarousel.builder(
-                        options: FlutterCarouselOptions(
-                          indicatorMargin: 0,
-                          autoPlay: true,
-                          height: context
-                              .percentHeight(context.height > 700 ? 0.4 : 0.6),
-                          showIndicator: true,
-                          slideIndicator: CircularSlideIndicator(
-                            slideIndicatorOptions: const SlideIndicatorOptions(
-                              indicatorRadius: 5,
-                            ),
-                          ),
-                        ),
-                        itemCount: 5,
-                        itemBuilder: (
-                          BuildContext context,
-                          int itemIndex,
-                          int pageViewIndex,
-                        ) {
-                          return const MovieCarousselItem(
-                            url:
-                                "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
-                            id: 0,
-                          );
+                      ValueListenableBuilder(
+                        valueListenable: store,
+                        builder: (context, movieState, child) {
+                          if (movieState is MovieStateError) {
+                            return Center(
+                              child: Text(movieState.message ?? 'Erro padrão'),
+                            );
+                          }
+                          if (movieState is MovieStateLoading) {
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            );
+                          }
+                          if (movieState is MovieStateSuccess) {
+                            return PopularMovieCarousel(
+                                movies: movieState.movies);
+                          }
+                          return const SizedBox.shrink();
                         },
                       ),
                       const SizedBox(
                         height: Spacing.x16,
                       ),
-                      const MovieCourossel.large(
+                      const MovieCarousel.large(
                         imageUrls: [
                           "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
                           "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
@@ -79,7 +91,7 @@ class HomeScreen extends StatelessWidget {
                       const SizedBox(
                         height: Spacing.x16,
                       ),
-                      const MovieCourossel.large(
+                      const MovieCarousel.large(
                         imageUrls: [
                           "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
                           "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",

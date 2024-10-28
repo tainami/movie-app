@@ -3,7 +3,7 @@ import 'package:movie_app/core/extensions/media_query_extension.dart';
 import 'package:movie_app/core/extensions/theme_extension.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/spacing.dart';
-import 'package:movie_app/widgets/movie_carrousel.dart';
+import 'package:movie_app/widgets/movie_carousel.dart';
 import 'package:movie_app/widgets/movie_detail_background.dart';
 import 'package:movie_app/widgets/movie_tags.dart';
 
@@ -94,7 +94,7 @@ class MovieDetailScreen extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 18),
-                  const MovieCourossel.mini(
+                  const MovieCarousel.mini(
                     imageUrls: [
                       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSF20QSMOsQ9zRnkg01qJcCcfnyrhO4EO68yTEzIEeuUdY9oe9bY9iXHzPhdG87-kyPPYQ&usqp=CAU",
                       "https://i.pinimg.com/474x/fe/19/24/fe1924bbc934f26190e4ce96db470e24.jpg",

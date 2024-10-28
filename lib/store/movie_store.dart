@@ -6,11 +6,13 @@ import 'package:movie_app/store/movie_state.dart';
 class MovieStore extends ValueNotifier<MovieState> {
   final MovieRepository repository;
 
-  MovieStore(this.repository,) : super(MovieStateInitials());
+  MovieStore(
+    this.repository,
+  ) : super(MovieStateInitials());
 
-  Future<void> getMovies() async {
-     value = MovieStateLoading();
-    final movies = await repository.getMovies();
+  Future<void> getPopularMovies() async {
+    value = MovieStateLoading();
+    final movies = await repository.getPopularMovies();
 
     if (movies.$1 != null) {
       value = MovieStateSuccess(movies: movies.$1!);

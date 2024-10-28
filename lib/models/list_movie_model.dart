@@ -4,19 +4,20 @@ import 'dart:convert';
 class ListMovieModel {
   final int id;
   final String backdrop_path;
-  final List<int> genreIds;
+  final List<num> genre_ids;
   final String overview;
   final double popularity;
   final String poster_path;
   final String release_date;
   final String title;
   final double vote_average;
-  final double vote_count;
+  final num vote_count;
+  // https://image.tmdb.org/t/p/w500
 
   ListMovieModel({
     required this.id,
     required this.backdrop_path,
-    required this.genreIds,
+    required this.genre_ids,
     required this.overview,
     required this.popularity,
     required this.poster_path,
@@ -26,11 +27,13 @@ class ListMovieModel {
     required this.vote_count,
   });
 
+  String get imageUrl => "https://image.tmdb.org/t/p/w154$poster_path";
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
       'backdrop_path': backdrop_path,
-      'genreIds': genreIds,
+      'genre_ids': genre_ids,
       'overview': overview,
       'popularity': popularity,
       'poster_path': poster_path,
@@ -42,11 +45,11 @@ class ListMovieModel {
   }
 
   factory ListMovieModel.fromMap(Map<String, dynamic> map) {
-    return ListMovieModel(
+    final data = ListMovieModel(
       id: map['id'] as int,
       backdrop_path: map['backdrop_path'] as String,
-      genreIds: List<int>.from(
-        (map['genreIds'] as List<int>),
+      genre_ids: List<num>.from(
+        (map['genre_ids'] as List),
       ),
       overview: map['overview'] as String,
       popularity: map['popularity'] as double,
@@ -54,8 +57,9 @@ class ListMovieModel {
       release_date: map['release_date'] as String,
       title: map['title'] as String,
       vote_average: map['vote_average'] as double,
-      vote_count: map['vote_count'] as double,
+      vote_count: map['vote_count'] as num,
     );
+    return data;
   }
 
   String toJson() => json.encode(toMap());
