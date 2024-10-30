@@ -13,9 +13,10 @@ class MovieModel {
   final String release_date;
   final String status;
   final String title;
+  final String homepage;
   final double vote_average;
-  final double vote_count;
-  
+  final num vote_count;
+
   MovieModel({
     required this.backdrop_path,
     required this.id,
@@ -25,12 +26,13 @@ class MovieModel {
     required this.release_date,
     required this.status,
     required this.title,
+    required this.homepage,
     required this.vote_average,
     required this.vote_count,
     required this.genres,
   });
 
-  
+  String get imageUrl => "https://image.tmdb.org/t/p/w1280$poster_path";
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -43,6 +45,7 @@ class MovieModel {
       'release_date': release_date,
       'status': status,
       'title': title,
+      'homepage': homepage,
       'vote_average': vote_average,
       'vote_count': vote_count,
     };
@@ -51,7 +54,11 @@ class MovieModel {
   factory MovieModel.fromMap(Map<String, dynamic> map) {
     return MovieModel(
       backdrop_path: map['backdrop_path'] as String,
-      genres: List<GenresModel>.from((map['genres'] as List<int>).map<GenresModel>((x) => GenresModel.fromMap(x as Map<String,dynamic>),),),
+      genres: List<GenresModel>.from(
+        (map['genres'] as List<dynamic>).map<GenresModel>(
+          (x) => GenresModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
       id: map['id'] as int,
       overview: map['overview'] as String,
       popularity: map['popularity'] as double,
@@ -59,12 +66,14 @@ class MovieModel {
       release_date: map['release_date'] as String,
       status: map['status'] as String,
       title: map['title'] as String,
+      homepage: map['homepage'] as String,
       vote_average: map['vote_average'] as double,
-      vote_count: map['vote_count'] as double,
+      vote_count: map['vote_count'] as num,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory MovieModel.fromJson(String source) => MovieModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory MovieModel.fromJson(String source) =>
+      MovieModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

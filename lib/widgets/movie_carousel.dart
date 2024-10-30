@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/core/extensions/theme_extension.dart';
 import 'package:movie_app/core/theme/spacing.dart';
+import 'package:movie_app/models/list_movie_model.dart';
 import 'package:movie_app/widgets/movie_card.dart';
 
 class MovieCarousel extends StatelessWidget {
-  final List<String> imageUrls;
+    final List<ListMovieModel> movies;
   final String title;
   final String size;
 
   const MovieCarousel.large({
     super.key,
-    required this.imageUrls,
+    required this.movies,
     required this.title,
     this.size = "large",
   });
 
   const MovieCarousel.mini({
     super.key,
-    required this.imageUrls,
+    required this.movies,
     required this.title,
     this.size = "mini",
   });
@@ -50,7 +51,7 @@ class MovieCarousel extends StatelessWidget {
                 ? MovieCardContraints.movieCardHeightLarge
                 : MovieCardContraints.movieCardHeightMini,
             child: ListView.builder(
-              itemCount: imageUrls.length,
+              itemCount: movies.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (
                 BuildContext context,
@@ -59,11 +60,11 @@ class MovieCarousel extends StatelessWidget {
                 return Container(
                   child: size == "large"
                       ? MovieCard.large(
-                          url: imageUrls[itemIndex],
+                          url: movies[itemIndex].imageUrl,
                           id: itemIndex,
                         )
                       : MovieCard.mini(
-                          url: imageUrls[itemIndex],
+                          url: movies[itemIndex].imageUrl,
                           id: itemIndex,
                         ),
                 );

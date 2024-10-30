@@ -11,23 +11,26 @@ class MovieTags extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: tags.map((tag) {
-        return Padding(
-          padding: const EdgeInsets.only(right: 10),
-          child: Container(
-            alignment: Alignment.center,
-            height: 30,
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(10),
+    return SizedBox(
+      height: 30,
+      child: ListView(
+        
+        scrollDirection: Axis.horizontal,
+        children: tags.map((tag) {
+          return Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Text(tag),
             ),
-            child: Text(tag),
-          ),
-        );
-      }).toList(),
+          );
+        }).toList(),
+      ),
     );
   }
 }

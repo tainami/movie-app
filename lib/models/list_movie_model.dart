@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 class ListMovieModel {
   final int id;
   final String backdrop_path;
@@ -12,7 +11,6 @@ class ListMovieModel {
   final String title;
   final double vote_average;
   final num vote_count;
-  // https://image.tmdb.org/t/p/w500
 
   ListMovieModel({
     required this.id,
@@ -27,7 +25,7 @@ class ListMovieModel {
     required this.vote_count,
   });
 
-  String get imageUrl => "https://image.tmdb.org/t/p/w154$poster_path";
+  String get imageUrl => "https://image.tmdb.org/t/p/w342$poster_path";
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
