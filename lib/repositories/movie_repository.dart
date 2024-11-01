@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:movie_app/core/app_error.dart';
 import 'package:movie_app/core/constants/app_token.dart';
+import 'package:movie_app/models/list_credits_model.dart';
 import 'package:movie_app/models/list_movie_model.dart';
 import 'package:movie_app/models/movie_model.dart';
 
@@ -9,6 +10,8 @@ abstract class MovieRepository {
   Future<(List<ListMovieModel>?, AppError?)> getNowPlayingMovies();
   Future<(List<ListMovieModel>?, AppError?)> getTopRatedMovies();
   Future<(MovieModel?, AppError?)> getMovieById(int id);
+  Future<(List<ListCreditsModel>?, AppError?)> getMovieCast(int movieId);
+  Future<(List<ListMovieModel>?, AppError?)> searchMovies(String query);
 }
 
 class MovieRepositoryImpl implements MovieRepository {
@@ -72,6 +75,52 @@ class MovieRepositoryImpl implements MovieRepository {
       return (
         null,
         UnknownError("Erro desconhecido"),
+      );
+    }
+  }
+
+  @override
+  Future<(List<ListCreditsModel>?, AppError?)> getMovieCast(int movieId) async {
+    try {
+      final response = await dio.get(
+        "https://api.themoviedb.org/3/movie/$movieId/credits?language=en-US",
+        options: Options(headers: <String, dynamic>{
+          'Authorization': 'Bearer ${AppToken.token}',
+          'content-type': 'application/json',
+        }),
+      );
+
+      final data = response.data["cast"] as List;
+      final List<ListCreditsModel> castMovie =
+          data.map((u) => ListCreditsModel.fromMap(u)).toList();
+      return (castMovie, null);
+    } on DioException {
+      return (
+        null,
+        UnknownError("Erro desconhecido"),
+      );
+    }
+  }
+
+  @override
+  Future<(List<ListMovieModel>?, AppError?)> searchMovies(String query) async {
+    try {
+      final response = await dio.get(
+        "https://api.themoviedb.org/3/search/movie?query=$query&include_adult=false&language=en-US&page=1",
+        options: Options(headers: <String, dynamic>{
+          'Authorization': 'Bearer ${AppToken.token}',
+          'content-type': 'application/json',
+        }),
+      );
+
+      final data = response.data["results"] as List;
+      final List<ListMovieModel> movies =
+          data.map((u) => ListMovieModel.fromMap(u)).toList();
+      return (movies, null);
+    } on DioException {
+      return (
+        null,
+        UnknownError("Erro ao buscar filmes"),
       );
     }
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/core/extensions/theme_extension.dart';
+import 'package:movie_app/core/theme/app_colors.dart';
 
 class UserAvatar extends StatelessWidget {
   const UserAvatar({super.key});
@@ -23,11 +24,10 @@ class UserAvatar extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Hello,',
-                style: TextStyle(
-                  color: Color(0xFFAB947B),
-                  fontSize: 16,
+                style: context.bodyLarge.copyWith(
+                  color: AppColors.primary,
                 ),
               ),
               Text(

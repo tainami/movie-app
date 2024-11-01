@@ -85,11 +85,14 @@ class MovieCarouselItem extends StatelessWidget {
         const SizedBox(
           height: Spacing.xs20,
         ),
-        Text(
-          title,
-          style: context.headlineMedium,
-          overflow: TextOverflow.ellipsis,
-          maxLines: 1,
+        FittedBox(
+          child: Text(
+            title,
+            style: context.headlineMedium,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            textAlign: TextAlign.center,
+          ),
         ),
       ],
     );

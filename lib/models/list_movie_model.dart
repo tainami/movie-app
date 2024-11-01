@@ -2,11 +2,11 @@ import 'dart:convert';
 
 class ListMovieModel {
   final int id;
-  final String backdrop_path;
+  final String? backdrop_path;
   final List<num> genre_ids;
   final String overview;
   final double popularity;
-  final String poster_path;
+  final String? poster_path;
   final String release_date;
   final String title;
   final double vote_average;
@@ -25,7 +25,12 @@ class ListMovieModel {
     required this.vote_count,
   });
 
-  String get imageUrl => "https://image.tmdb.org/t/p/w342$poster_path";
+  String get imageUrl {
+    if (poster_path == null) {
+      return '';
+    }
+    return "https://image.tmdb.org/t/p/w342$poster_path";
+  }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -45,13 +50,13 @@ class ListMovieModel {
   factory ListMovieModel.fromMap(Map<String, dynamic> map) {
     final data = ListMovieModel(
       id: map['id'] as int,
-      backdrop_path: map['backdrop_path'] as String,
+      backdrop_path: map['backdrop_path'] as String?,
       genre_ids: List<num>.from(
         (map['genre_ids'] as List),
       ),
       overview: map['overview'] as String,
       popularity: map['popularity'] as double,
-      poster_path: map['poster_path'] as String,
+      poster_path: map['poster_path'] as String?,
       release_date: map['release_date'] as String,
       title: map['title'] as String,
       vote_average: map['vote_average'] as double,

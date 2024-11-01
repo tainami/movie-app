@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       MovieStoreBuilder(
                         store: nowPlayingStore,
                         isCarousel: false,
-                        title: "Recent",
+                        title: "Now Playing",
                       ),
                       const SizedBox(
                         height: Spacing.x16,
@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       MovieStoreBuilder(
                         store: topRatedStore,
                         isCarousel: false,
-                        title: "My Favorites",
+                        title: "Top Rated",
                       ),
                       const SizedBox(
                         height: Spacing.xxm32 + kBottomNavigationBarHeight,

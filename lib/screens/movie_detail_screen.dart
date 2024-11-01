@@ -25,6 +25,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   void initState() {
     super.initState();
     store = MovieStore(MovieRepositoryImpl(Dio()));
+
     store.fetchMovieById(widget.movieId);
   }
 
@@ -44,7 +45,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
               child: Text(movieState.message ?? 'Erro desconhecido'),
             );
           } else if (movieState is MovieStateSingleSuccess) {
-            return MovieDetailContent(movie: movieState.movie);
+            return MovieDetailContent(
+              movie: movieState.movie,
+              movieId: movieState.movie.id,
+            );
           } else {
             return const SizedBox.shrink();
           }

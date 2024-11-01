@@ -11,7 +11,7 @@ class NotificationIcon extends StatelessWidget {
       height: 40,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: AppColors.primary,
+        color: AppColors.primary.withOpacity(0.5),
       ),
       child: const Icon(
         Icons.notifications,

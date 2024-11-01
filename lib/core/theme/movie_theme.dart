@@ -60,7 +60,7 @@ class MovieThemeData {
         ),
         bodyLarge: GoogleFonts.openSans(
           fontSize: 16,
-          fontWeight: FontWeight.normal,
+          fontWeight: FontWeight.w500,
           color: AppColors.light,
         ),
         bodyMedium: GoogleFonts.openSans(

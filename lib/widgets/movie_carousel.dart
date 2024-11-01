@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/core/extensions/theme_extension.dart';
+import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/spacing.dart';
 import 'package:movie_app/models/list_movie_model.dart';
 import 'package:movie_app/widgets/movie_card.dart';
 
 class MovieCarousel extends StatelessWidget {
-    final List<ListMovieModel> movies;
+  final List<ListMovieModel> movies;
   final String title;
   final String size;
 
@@ -37,9 +38,14 @@ class MovieCarousel extends StatelessWidget {
                 title,
                 style: context.bodyLarge,
               ),
-              Text(
-                "See all",
-                style: context.bodyLarge,
+              InkWell(
+                onTap: () {},
+                child: Text(
+                  "See all",
+                  style: context.bodyLarge.copyWith(
+                    color: AppColors.primary,
+                  ),
+                ),
               ),
             ],
           ),
@@ -61,11 +67,11 @@ class MovieCarousel extends StatelessWidget {
                   child: size == "large"
                       ? MovieCard.large(
                           url: movies[itemIndex].imageUrl,
-                          id: itemIndex,
+                          id: movies[itemIndex].id,
                         )
                       : MovieCard.mini(
                           url: movies[itemIndex].imageUrl,
-                          id: itemIndex,
+                          id: movies[itemIndex].id,
                         ),
                 );
               },

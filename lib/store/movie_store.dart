@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/core/app_error.dart';
+import 'package:movie_app/models/list_credits_model.dart';
 import 'package:movie_app/models/list_movie_model.dart';
 import 'package:movie_app/repositories/movie_repository.dart';
 import 'package:movie_app/store/movie_state.dart';
@@ -54,6 +55,7 @@ class MovieStore extends ValueNotifier<MovieState> {
 
   Future<void> fetchMovieById(int id) async {
     value = MovieStateLoading();
+
     final movies = await repository.getMovieById(id);
 
     if (movies.$1 != null) {
@@ -61,6 +63,33 @@ class MovieStore extends ValueNotifier<MovieState> {
     } else if (movies.$2 != null) {
       final errorMessage = movies.$2!.message;
       value = MovieStateError(errorMessage);
+    }
+  }
+
+  Future<void> fetchMovieCast(int movieId) async {
+    value = MovieStateLoading();
+
+    (List<ListCreditsModel>?, AppError?) movieCast;
+
+    movieCast = await repository.getMovieCast(movieId);
+
+    if (movieCast.$1 != null) {
+      value = MovieCastStateSuccess(movieCast: movieCast.$1!);
+    } else if (movieCast.$2 != null) {
+      final errorMessage = movieCast.$2!.message;
+      value = MovieStateError(errorMessage);
+    }
+  }
+
+  Future<void> searchMovies(String query) async {
+    value = MovieStateLoading();
+    final response = await repository.searchMovies(query);
+    if (response.$1 != null) {
+      final moviesWithPosters =
+          response.$1!.where((movie) => movie.poster_path != null).toList();
+      value = MovieStateSuccess(movies: moviesWithPosters);
+    } else {
+      value = MovieStateError(response.$2?.message ?? 'Erro ao buscar filmes');
     }
   }
 }
