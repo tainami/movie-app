@@ -45,6 +45,11 @@ class _HomeScreenState extends State<HomeScreen>
     popularStore.removeListener(storeListener);
     nowPlayingStore.removeListener(storeListener);
     topRatedStore.removeListener(storeListener);
+
+    popularStore.dispose();
+    nowPlayingStore.dispose();
+    topRatedStore.dispose();
+
     super.dispose();
   }
 

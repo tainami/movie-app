@@ -6,12 +6,18 @@ import 'package:movie_app/models/list_movie_model.dart';
 import 'package:movie_app/models/movie_model.dart';
 
 abstract class MovieRepository {
-  Future<(List<ListMovieModel>?, AppError?)> getPopularMovies(
-      {bool takeFive = false});
-  Future<(List<ListMovieModel>?, AppError?)> getNowPlayingMovies(
-      {bool takeFive = false});
-  Future<(List<ListMovieModel>?, AppError?)> getTopRatedMovies(
-      {bool takeFive = false});
+  Future<(List<ListMovieModel>?, AppError?)> getPopularMovies({
+    bool takeFive = false,
+    required int page,
+  });
+  Future<(List<ListMovieModel>?, AppError?)> getNowPlayingMovies({
+    bool takeFive = false,
+    required int page,
+  });
+  Future<(List<ListMovieModel>?, AppError?)> getTopRatedMovies({
+    bool takeFive = false,
+    required int page,
+  });
   Future<(MovieModel?, AppError?)> getMovieById(int id);
   Future<(List<ListCreditsModel>?, AppError?)> getMovieCast(int movieId);
   Future<(List<ListMovieModel>?, AppError?)> searchMovies(String query);
@@ -23,28 +29,34 @@ class MovieRepositoryImpl implements MovieRepository {
   MovieRepositoryImpl(this.dio);
 
   @override
-  Future<(List<ListMovieModel>?, AppError?)> getPopularMovies(
-      {bool takeFive = false}) async {
+  Future<(List<ListMovieModel>?, AppError?)> getPopularMovies({
+    bool takeFive = false,
+    required int page,
+  }) async {
     return await _fetchMovies(
-      "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
+      "https://api.themoviedb.org/3/movie/popular?language=en-US&page=$page",
       takeFive: takeFive,
     );
   }
 
   @override
-  Future<(List<ListMovieModel>?, AppError?)> getNowPlayingMovies(
-      {bool takeFive = false}) async {
+  Future<(List<ListMovieModel>?, AppError?)> getNowPlayingMovies({
+    bool takeFive = false,
+    required int page,
+  }) async {
     return await _fetchMovies(
-      "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1",
+      "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=$page",
       takeFive: takeFive,
     );
   }
 
   @override
-  Future<(List<ListMovieModel>?, AppError?)> getTopRatedMovies(
-      {bool takeFive = false}) async {
+  Future<(List<ListMovieModel>?, AppError?)> getTopRatedMovies({
+    bool takeFive = false,
+    required int page,
+  }) async {
     return await _fetchMovies(
-      "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
+      "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=$page",
       takeFive: takeFive,
     );
   }

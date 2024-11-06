@@ -39,12 +39,35 @@ class MovieListScreen extends StatefulWidget {
 
 class _MovieListScreenState extends State<MovieListScreen> {
   late final MovieStore store;
+  late final ScrollController scrollController;
 
   @override
   void initState() {
     super.initState();
     store = MovieStore(MovieRepositoryImpl(Dio()));
+    scrollController = ScrollController();
     _fetchMoviesByCategory();
+
+    scrollController.addListener(scrollListener);
+  }
+
+  @override
+  void dispose() {
+    scrollController.removeListener(scrollListener);
+    store.dispose();
+    super.dispose();
+  }
+
+  Future<void> scrollListener() async {
+    if (scrollController.offset >= scrollController.position.maxScrollExtent) {
+      if (store.value is! MovieStateLoading) {
+        Future.delayed(
+          const Duration(milliseconds: 500),
+        ).then(
+          (_) => _fetchMoviesByCategory(),
+        );
+      }
+    }
   }
 
   void _fetchMoviesByCategory() {
@@ -99,6 +122,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
                     ),
                     Expanded(
                       child: GridView.builder(
+                        controller: scrollController,
                         padding: const EdgeInsets.only(
                           bottom: 32.0 + kBottomNavigationBarHeight,
                           top: 16.0,

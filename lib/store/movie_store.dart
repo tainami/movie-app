@@ -13,6 +13,8 @@ enum FetchType {
 
 class MovieStore extends ValueNotifier<MovieState> {
   final MovieRepository repository;
+  int page = 1;
+  List<ListMovieModel> _currentMovies = [];
 
   MovieStore(this.repository) : super(MovieStateInitials());
 
@@ -35,18 +37,31 @@ class MovieStore extends ValueNotifier<MovieState> {
 
     switch (fetchType) {
       case FetchType.popular:
-        movies = await repository.getPopularMovies(takeFive: takeFive);
+        movies = await repository.getPopularMovies(
+          takeFive: takeFive,
+          page: page,
+        );
         break;
       case FetchType.topRated:
-        movies = await repository.getTopRatedMovies(takeFive: takeFive);
+        movies = await repository.getTopRatedMovies(
+          takeFive: takeFive,
+          page: page,
+        );
         break;
       case FetchType.recent:
-        movies = await repository.getNowPlayingMovies(takeFive: takeFive);
+        movies = await repository.getNowPlayingMovies(
+          takeFive: takeFive,
+          page: page,
+        );
         break;
     }
 
     if (movies.$1 != null) {
-      value = MovieStateSuccess(movies: movies.$1!);
+      _currentMovies = [..._currentMovies, ...movies.$1!];
+      value = MovieStateSuccess(
+        movies: _currentMovies.toSet().toList(),
+      );
+      page++;
     } else if (movies.$2 != null) {
       final errorMessage = movies.$2!.message;
       value = MovieStateError(errorMessage);

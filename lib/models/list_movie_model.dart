@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-class ListMovieModel {
+import 'package:equatable/equatable.dart';
+
+class ListMovieModel extends Equatable {
   final int id;
   final String? backdrop_path;
   final List<num> genre_ids;
@@ -12,7 +14,7 @@ class ListMovieModel {
   final double vote_average;
   final num vote_count;
 
-  ListMovieModel({
+  const ListMovieModel({
     required this.id,
     required this.backdrop_path,
     required this.genre_ids,
@@ -69,4 +71,18 @@ class ListMovieModel {
 
   factory ListMovieModel.fromJson(String source) =>
       ListMovieModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  List<Object?> get props => [
+        id,
+        backdrop_path,
+        genre_ids,
+        overview,
+        popularity,
+        poster_path,
+        release_date,
+        title,
+        vote_average,
+        vote_count,
+      ];
 }
