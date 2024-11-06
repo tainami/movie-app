@@ -6,9 +6,12 @@ import 'package:movie_app/models/list_movie_model.dart';
 import 'package:movie_app/models/movie_model.dart';
 
 abstract class MovieRepository {
-  Future<(List<ListMovieModel>?, AppError?)> getPopularMovies();
-  Future<(List<ListMovieModel>?, AppError?)> getNowPlayingMovies();
-  Future<(List<ListMovieModel>?, AppError?)> getTopRatedMovies();
+  Future<(List<ListMovieModel>?, AppError?)> getPopularMovies(
+      {bool takeFive = false});
+  Future<(List<ListMovieModel>?, AppError?)> getNowPlayingMovies(
+      {bool takeFive = false});
+  Future<(List<ListMovieModel>?, AppError?)> getTopRatedMovies(
+      {bool takeFive = false});
   Future<(MovieModel?, AppError?)> getMovieById(int id);
   Future<(List<ListCreditsModel>?, AppError?)> getMovieCast(int movieId);
   Future<(List<ListMovieModel>?, AppError?)> searchMovies(String query);
@@ -20,24 +23,34 @@ class MovieRepositoryImpl implements MovieRepository {
   MovieRepositoryImpl(this.dio);
 
   @override
-  Future<(List<ListMovieModel>?, AppError?)> getPopularMovies() async {
+  Future<(List<ListMovieModel>?, AppError?)> getPopularMovies(
+      {bool takeFive = false}) async {
     return await _fetchMovies(
-        "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1");
+      "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
+      takeFive: takeFive,
+    );
   }
 
   @override
-  Future<(List<ListMovieModel>?, AppError?)> getNowPlayingMovies() async {
+  Future<(List<ListMovieModel>?, AppError?)> getNowPlayingMovies(
+      {bool takeFive = false}) async {
     return await _fetchMovies(
-        "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1");
+      "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1",
+      takeFive: takeFive,
+    );
   }
 
   @override
-  Future<(List<ListMovieModel>?, AppError?)> getTopRatedMovies() async {
+  Future<(List<ListMovieModel>?, AppError?)> getTopRatedMovies(
+      {bool takeFive = false}) async {
     return await _fetchMovies(
-        "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1");
+      "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
+      takeFive: takeFive,
+    );
   }
 
-  Future<(List<ListMovieModel>?, AppError?)> _fetchMovies(String url) async {
+  Future<(List<ListMovieModel>?, AppError?)> _fetchMovies(String url,
+      {bool takeFive = false}) async {
     try {
       final response = await dio.get(
         url,
@@ -49,8 +62,9 @@ class MovieRepositoryImpl implements MovieRepository {
 
       final data = response.data["results"] as List;
       final List<ListMovieModel> movies =
-          data.map((u) => ListMovieModel.fromMap(u)).take(5).toList();
-      return (movies, null);
+          data.map((u) => ListMovieModel.fromMap(u)).toList();
+
+      return (takeFive ? movies.take(5).toList() : movies, null);
     } on DioException {
       return (
         null,

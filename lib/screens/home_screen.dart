@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/core/theme/spacing.dart';
 import 'package:movie_app/repositories/movie_repository.dart';
+import 'package:movie_app/screens/movie_list_screen.dart';
 import 'package:movie_app/screens/root_screen.dart';
 import 'package:movie_app/store/movie_state.dart';
 import 'package:movie_app/store/movie_store.dart';
@@ -17,7 +18,8 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin {
   late final MovieStore popularStore;
   late final MovieStore nowPlayingStore;
   late final MovieStore topRatedStore;
@@ -29,9 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
     nowPlayingStore = MovieStore(MovieRepositoryImpl(Dio()));
     topRatedStore = MovieStore(MovieRepositoryImpl(Dio()));
 
-    popularStore.getPopularMovies();
-    nowPlayingStore.getNowPlayingMovies();
-    topRatedStore.getTopRatedMovies();
+    popularStore.getPopularMovies(takeFive: true);
+    nowPlayingStore.getNowPlayingMovies(takeFive: true);
+    topRatedStore.getTopRatedMovies(takeFive: true);
 
     popularStore.addListener(storeListener);
     nowPlayingStore.addListener(storeListener);
@@ -63,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -73,6 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AppBar(
+                  leadingWidth: 0,
                   toolbarHeight: 70,
                   title: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -91,6 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       MovieStoreBuilder(
                         store: popularStore,
                         isCarousel: true,
+                        type: CategoryType.popular,
                       ),
                       const SizedBox(
                         height: Spacing.x16,
@@ -99,6 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         store: nowPlayingStore,
                         isCarousel: false,
                         title: "Now Playing",
+                        type: CategoryType.nowPlaying,
                       ),
                       const SizedBox(
                         height: Spacing.x16,
@@ -107,6 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         store: topRatedStore,
                         isCarousel: false,
                         title: "Top Rated",
+                        type: CategoryType.topRated,
                       ),
                       const SizedBox(
                         height: Spacing.xxm32 + kBottomNavigationBarHeight,
@@ -121,4 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

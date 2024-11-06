@@ -4,6 +4,7 @@ import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/repositories/movie_repository.dart';
 import 'package:movie_app/store/movie_state.dart';
 import 'package:movie_app/store/movie_store.dart';
+import 'package:movie_app/widgets/gradient_background.dart';
 import 'package:movie_app/widgets/movie_detail_content.dart';
 
 class MovieDetailScreen extends StatefulWidget {
@@ -37,8 +38,13 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
         valueListenable: store,
         builder: (context, movieState, child) {
           if (movieState is MovieStateLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return const Stack(
+              children: [
+                GradientBackground(),
+                Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ],
             );
           } else if (movieState is MovieStateError) {
             return Center(

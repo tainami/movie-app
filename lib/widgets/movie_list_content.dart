@@ -55,6 +55,7 @@ class MovieListContent extends StatelessWidget {
             return MovieCard.mini(
               url: movies[index].imageUrl,
               id: movies[index].id,
+              useRightSpacing: false,
             );
           },
         );

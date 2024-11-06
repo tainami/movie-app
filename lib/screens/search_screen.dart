@@ -5,6 +5,7 @@ import 'package:movie_app/core/extensions/theme_extension.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/repositories/movie_repository.dart';
 import 'package:movie_app/store/movie_store.dart';
+import 'package:movie_app/widgets/gradient_background.dart';
 import 'package:movie_app/widgets/movie_list_content.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -38,66 +39,61 @@ class _SearchScreenState extends State<SearchScreen> {
     }
   }
 
+  void onClear() {
+    textController.clear();
+    store.resetState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.dark,
-      appBar: AppBar(
-        backgroundColor: AppColors.dark,
-        title: TextFormField(
-          controller: textController,
-          decoration: InputDecoration(
-            hintText: "Buscar por filme",
-            hintStyle: context.labelLarge,
-            suffixIcon: IconButton(
-              onPressed: onSearch,
-              icon: const FaIcon(
-                FontAwesomeIcons.magnifyingGlass,
-                color: AppColors.primary,
+      body: Stack(
+        children: [
+          const GradientBackground(),
+          Column(
+            children: [
+              AppBar(
+                leading: Container(),
+                leadingWidth: 0,
+                backgroundColor: Colors.transparent,
+                title: Container(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  child: TextFormField(
+                    controller: textController,
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                      ),
+                      hintText: "Buscar por filme",
+                      hintStyle: context.labelLarge,
+                      suffixIcon: IconButton(
+                        onPressed: onClear,
+                        icon: const FaIcon(
+                          FontAwesomeIcons.xmark,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ),
+                    onFieldSubmitted: (_) => onSearch(),
+                  ),
+                ),
               ),
-            ),
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: ValueListenableBuilder(
+                    valueListenable: store,
+                    builder: (context, movieState, child) {
+                      return MovieListContent(movieState: movieState);
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
-        ),
-      ),
-      body: Center(
-        child: ValueListenableBuilder(
-          valueListenable: store,
-          builder: (context, movieState, child) {
-            return MovieListContent(movieState: movieState);
-          },
-        ),
+        ],
       ),
     );
   }
 }
-
-
-
-// Column(
-//         children: [
-//           Lottie.asset(
-//             'assets/empty.json',
-//             height: context.percentHeight(0.25),
-//           ),
-//           Flexible(
-//             child: GridView.builder(
-//               padding: const EdgeInsets.symmetric(horizontal: Spacing.x16),
-//               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-//                 crossAxisCount: 2,
-//                 crossAxisSpacing: 10,
-//                 mainAxisSpacing: 10,
-//                 childAspectRatio: 9 / 16,
-//               ),
-//               itemCount: 10,
-//               itemBuilder: (context, index) {
-//                 return const MovieCard.mini(
-//                   useRightSpacing: false,
-//                   url:
-//                       "https://i.pinimg.com/736x/d2/33/a4/d233a42eb8ab9c98d82bb019d230b354.jpg",
-//                   id: 0,
-//                 );
-//               },
-//             ),
-//           ),
-//         ],
-//       ),

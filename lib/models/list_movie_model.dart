@@ -27,7 +27,7 @@ class ListMovieModel {
 
   String get imageUrl {
     if (poster_path == null) {
-      return '';
+      return 'https://www.shutterstock.com/image-vector/image-icon-600nw-211642900.jpg';
     }
     return "https://image.tmdb.org/t/p/w342$poster_path";
   }

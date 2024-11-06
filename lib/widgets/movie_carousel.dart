@@ -3,17 +3,20 @@ import 'package:movie_app/core/extensions/theme_extension.dart';
 import 'package:movie_app/core/theme/app_colors.dart';
 import 'package:movie_app/core/theme/spacing.dart';
 import 'package:movie_app/models/list_movie_model.dart';
+import 'package:movie_app/screens/movie_list_screen.dart';
 import 'package:movie_app/widgets/movie_card.dart';
 
 class MovieCarousel extends StatelessWidget {
   final List<ListMovieModel> movies;
   final String title;
   final String size;
+  final CategoryType type;
 
   const MovieCarousel.large({
     super.key,
     required this.movies,
     required this.title,
+    required this.type,
     this.size = "large",
   });
 
@@ -21,6 +24,7 @@ class MovieCarousel extends StatelessWidget {
     super.key,
     required this.movies,
     required this.title,
+    required this.type,
     this.size = "mini",
   });
 
@@ -39,7 +43,13 @@ class MovieCarousel extends StatelessWidget {
                 style: context.bodyLarge,
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    "/movie-list",
+                    arguments: MovieListScreenArgs(title: title, type: type),
+                  );
+                },
                 child: Text(
                   "See all",
                   style: context.bodyLarge.copyWith(

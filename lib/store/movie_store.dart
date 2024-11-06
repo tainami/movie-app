@@ -16,32 +16,32 @@ class MovieStore extends ValueNotifier<MovieState> {
 
   MovieStore(this.repository) : super(MovieStateInitials());
 
-  Future<void> getPopularMovies() async {
-    await fetchMovies(FetchType.popular);
+  Future<void> getPopularMovies({bool takeFive = false}) async {
+    await fetchMovies(FetchType.popular, takeFive: takeFive);
   }
 
-  Future<void> getNowPlayingMovies() async {
-    await fetchMovies(FetchType.recent);
+  Future<void> getNowPlayingMovies({bool takeFive = false}) async {
+    await fetchMovies(FetchType.recent, takeFive: takeFive);
   }
 
-  Future<void> getTopRatedMovies() async {
-    await fetchMovies(FetchType.topRated);
+  Future<void> getTopRatedMovies({bool takeFive = false}) async {
+    await fetchMovies(FetchType.topRated, takeFive: takeFive);
   }
 
-  Future<void> fetchMovies(FetchType fetchType) async {
+  Future<void> fetchMovies(FetchType fetchType, {bool takeFive = false}) async {
     value = MovieStateLoading();
 
     (List<ListMovieModel>?, AppError?) movies;
 
     switch (fetchType) {
       case FetchType.popular:
-        movies = await repository.getPopularMovies();
+        movies = await repository.getPopularMovies(takeFive: takeFive);
         break;
       case FetchType.topRated:
-        movies = await repository.getTopRatedMovies();
+        movies = await repository.getTopRatedMovies(takeFive: takeFive);
         break;
       case FetchType.recent:
-        movies = await repository.getNowPlayingMovies();
+        movies = await repository.getNowPlayingMovies(takeFive: takeFive);
         break;
     }
 
@@ -74,7 +74,12 @@ class MovieStore extends ValueNotifier<MovieState> {
     movieCast = await repository.getMovieCast(movieId);
 
     if (movieCast.$1 != null) {
-      value = MovieCastStateSuccess(movieCast: movieCast.$1!);
+      final actorWithImage = movieCast.$1!
+          .where((movie) =>
+              movie.profile_path != null &&
+              movie.known_for_department == "Acting")
+          .toList();
+      value = MovieCastStateSuccess(movieCast: actorWithImage);
     } else if (movieCast.$2 != null) {
       final errorMessage = movieCast.$2!.message;
       value = MovieStateError(errorMessage);
@@ -91,5 +96,9 @@ class MovieStore extends ValueNotifier<MovieState> {
     } else {
       value = MovieStateError(response.$2?.message ?? 'Erro ao buscar filmes');
     }
+  }
+
+  void resetState() {
+    value = MovieStateInitials();
   }
 }

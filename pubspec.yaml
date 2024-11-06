@@ -34,4 +34,5 @@ flutter:
 
   assets:
     - assets/empty.json
+    - assets/splash.json
     - assets/error_state.json
