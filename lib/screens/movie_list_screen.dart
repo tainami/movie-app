@@ -40,6 +40,7 @@ class MovieListScreen extends StatefulWidget {
 class _MovieListScreenState extends State<MovieListScreen> {
   late final MovieStore store;
   late final ScrollController scrollController;
+  bool isLoadingMore = false;
 
   @override
   void initState() {
@@ -59,27 +60,26 @@ class _MovieListScreenState extends State<MovieListScreen> {
   }
 
   Future<void> scrollListener() async {
-    if (scrollController.offset >= scrollController.position.maxScrollExtent) {
-      if (store.value is! MovieStateLoading) {
-        Future.delayed(
-          const Duration(milliseconds: 500),
-        ).then(
-          (_) => _fetchMoviesByCategory(),
-        );
+    if (scrollController.position.pixels >=
+        scrollController.position.maxScrollExtent - 100) {
+      if (!isLoadingMore && store.value is! MovieStateLoading) {
+        setState(() => isLoadingMore = true);
+        await _fetchMoviesByCategory();
+        setState(() => isLoadingMore = false);
       }
     }
   }
 
-  void _fetchMoviesByCategory() {
+  Future<void> _fetchMoviesByCategory() async {
     switch (widget.args?.type) {
       case CategoryType.popular:
-        store.getPopularMovies();
+        await store.getPopularMovies();
         break;
       case CategoryType.nowPlaying:
-        store.getNowPlayingMovies();
+        await store.getNowPlayingMovies();
         break;
       case CategoryType.topRated:
-        store.getTopRatedMovies();
+        await store.getTopRatedMovies();
         break;
       default:
         break;
@@ -136,13 +136,22 @@ class _MovieListScreenState extends State<MovieListScreen> {
                           mainAxisSpacing: 6,
                           childAspectRatio: 9 / 12,
                         ),
-                        itemCount: movies.length,
+                        itemCount: movies.length + (isLoadingMore ? 1 : 0),
                         itemBuilder: (context, index) {
-                          return MovieCard.mini(
-                            url: movies[index].imageUrl,
-                            id: movies[index].id,
-                            useRightSpacing: false,
-                          );
+                          if (index < movies.length) {
+                            return MovieCard.mini(
+                              url: movies[index].imageUrl,
+                              id: movies[index].id,
+                              useRightSpacing: false,
+                            );
+                          } else {
+                            return const Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          }
                         },
                       ),
                     ),
