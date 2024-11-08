@@ -47,41 +47,46 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       backgroundColor: AppColors.dark,
+      appBar: AppBar(
+        leading: Container(),
+        leadingWidth: 0,
+        backgroundColor: Colors.transparent,
+        title: Container(
+          margin: const EdgeInsets.only(bottom: 8),
+          child: TextFormField(
+            controller: textController,
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+              ),
+              hintText: "Buscar por filme",
+              hintStyle: context.labelLarge,
+              suffixIcon: IconButton(
+                onPressed: onClear,
+                icon: const FaIcon(
+                  FontAwesomeIcons.xmark,
+                  color: AppColors.primary,
+                ),
+              ),
+            ),
+            onFieldSubmitted: (_) => onSearch(),
+          ),
+        ),
+      ),
       body: Stack(
         children: [
           const GradientBackground(),
           Column(
             children: [
-              AppBar(
-                leading: Container(),
-                leadingWidth: 0,
-                backgroundColor: Colors.transparent,
-                title: Container(
-                  margin: const EdgeInsets.only(bottom: 8),
-                  child: TextFormField(
-                    controller: textController,
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                      ),
-                      hintText: "Buscar por filme",
-                      hintStyle: context.labelLarge,
-                      suffixIcon: IconButton(
-                        onPressed: onClear,
-                        icon: const FaIcon(
-                          FontAwesomeIcons.xmark,
-                          color: AppColors.primary,
-                        ),
-                      ),
-                    ),
-                    onFieldSubmitted: (_) => onSearch(),
-                  ),
-                ),
-              ),
               Expanded(
                 child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                  margin: const EdgeInsets.only(
+                    top: 120,
+                    left: 16,
+                    right: 16,
+                  ),
                   child: ValueListenableBuilder(
                     valueListenable: store,
                     builder: (context, movieState, child) {

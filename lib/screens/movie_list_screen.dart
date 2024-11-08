@@ -7,7 +7,7 @@ import 'package:movie_app/repositories/movie_repository.dart';
 import 'package:movie_app/store/movie_state.dart';
 import 'package:movie_app/store/movie_store.dart';
 import 'package:movie_app/widgets/gradient_background.dart';
-import 'package:movie_app/widgets/movie_card.dart';
+import 'package:movie_app/widgets/list_movie_grid.dart';
 
 enum CategoryType {
   nowPlaying,
@@ -40,7 +40,6 @@ class MovieListScreen extends StatefulWidget {
 class _MovieListScreenState extends State<MovieListScreen> {
   late final MovieStore store;
   late final ScrollController scrollController;
-  bool isLoadingMore = false;
 
   @override
   void initState() {
@@ -49,23 +48,41 @@ class _MovieListScreenState extends State<MovieListScreen> {
     scrollController = ScrollController();
     _fetchMoviesByCategory();
 
+    store.addListener(storeListener);
     scrollController.addListener(scrollListener);
   }
 
   @override
   void dispose() {
     scrollController.removeListener(scrollListener);
+    store.removeListener(storeListener);
     store.dispose();
     super.dispose();
   }
 
+  void storeListener() {
+    if (store.value is MovieStateError) {
+      showSnackMessage();
+    }
+  }
+
+  void showSnackMessage() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Erro ao carregar filmes'),
+        duration: Duration(seconds: 4),
+      ),
+    );
+  }
+
   Future<void> scrollListener() async {
+    final canLoad = store.value is! MovieStateLoading &&
+        store.value is! MovieStateError &&
+        store.value is! MovieStateLoadingMore;
     if (scrollController.position.pixels >=
         scrollController.position.maxScrollExtent - 100) {
-      if (!isLoadingMore && store.value is! MovieStateLoading) {
-        setState(() => isLoadingMore = true);
+      if (canLoad) {
         await _fetchMoviesByCategory();
-        setState(() => isLoadingMore = false);
       }
     }
   }
@@ -89,6 +106,19 @@ class _MovieListScreenState extends State<MovieListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: Text(
+          widget.args?.title ?? "Movie List",
+          style: context.titleLarge.copyWith(
+            color: AppColors.light,
+          ),
+        ),
+        iconTheme: const IconThemeData(
+          color: AppColors.light,
+        ),
+      ),
       body: ValueListenableBuilder(
         valueListenable: store,
         builder: (context, state, child) {
@@ -102,64 +132,23 @@ class _MovieListScreenState extends State<MovieListScreen> {
               ],
             );
           } else if (state is MovieStateSuccess) {
-            final movies = state.movies;
-            return Stack(
-              children: [
-                const GradientBackground(),
-                Column(
-                  children: [
-                    AppBar(
-                      backgroundColor: Colors.transparent,
-                      title: Text(
-                        widget.args?.title ?? "Movie List",
-                        style: context.titleLarge.copyWith(
-                          color: AppColors.light,
-                        ),
-                      ),
-                      iconTheme: const IconThemeData(
-                        color: AppColors.light,
-                      ),
-                    ),
-                    Expanded(
-                      child: GridView.builder(
-                        controller: scrollController,
-                        padding: const EdgeInsets.only(
-                          bottom: 32.0 + kBottomNavigationBarHeight,
-                          top: 16.0,
-                          left: 16,
-                          right: 16,
-                        ),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 6,
-                          mainAxisSpacing: 6,
-                          childAspectRatio: 9 / 12,
-                        ),
-                        itemCount: movies.length + (isLoadingMore ? 1 : 0),
-                        itemBuilder: (context, index) {
-                          if (index < movies.length) {
-                            return MovieCard.mini(
-                              url: movies[index].imageUrl,
-                              id: movies[index].id,
-                              useRightSpacing: false,
-                            );
-                          } else {
-                            return const Center(
-                              child: Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: CircularProgressIndicator(),
-                              ),
-                            );
-                          }
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+            return ListMovieGrid(
+              scrollController: scrollController,
+              movies: state.movies,
+            );
+          } else if (state is MovieStateLoadingMore) {
+            return ListMovieGrid(
+              isLoading: true,
+              scrollController: scrollController,
+              movies: state.movies,
+            );
+          } else if (state is MovieStateError) {
+            return ListMovieGrid(
+              scrollController: scrollController,
+              movies: state.movies ?? [],
             );
           }
+
           return const SizedBox.shrink();
         },
       ),

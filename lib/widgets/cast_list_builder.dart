@@ -45,7 +45,7 @@ class _CastListBuilderState extends State<CastListBuilder> {
         if (movieCastState is MovieCastStateSuccess) {
           final List<ListCreditsModel> cast = movieCastState.movieCast;
           return SizedBox(
-            height: 120,
+            height: 100,
             child: GridView.builder(
               scrollDirection: Axis.horizontal,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

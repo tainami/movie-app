@@ -31,7 +31,11 @@ class MovieStore extends ValueNotifier<MovieState> {
   }
 
   Future<void> fetchMovies(FetchType fetchType, {bool takeFive = false}) async {
-    value = MovieStateLoading();
+    if (page == 1) {
+      value = MovieStateLoading();
+    } else {
+      value = MovieStateLoadingMore(movies: _currentMovies);
+    }
 
     (List<ListMovieModel>?, AppError?) movies;
 
@@ -58,13 +62,18 @@ class MovieStore extends ValueNotifier<MovieState> {
 
     if (movies.$1 != null) {
       _currentMovies = [..._currentMovies, ...movies.$1!];
+
       value = MovieStateSuccess(
         movies: _currentMovies.toSet().toList(),
       );
+
       page++;
     } else if (movies.$2 != null) {
       final errorMessage = movies.$2!.message;
-      value = MovieStateError(errorMessage);
+      value = MovieStateError(
+        errorMessage,
+        movies: _currentMovies,
+      );
     }
   }
 

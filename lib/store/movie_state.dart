@@ -24,9 +24,16 @@ class MovieCastStateSuccess extends MovieState {
   MovieCastStateSuccess({required this.movieCast});
 }
 
+class MovieStateLoadingMore extends MovieState {
+  final List<ListMovieModel> movies;
+
+  MovieStateLoadingMore({required this.movies});
+}
+
 class MovieStateError extends MovieState {
+  final List<ListMovieModel>? movies;
   final String? message;
-  MovieStateError(this.message);
+  MovieStateError(this.message, {this.movies});
 }
 
 class MovieStateInitials extends MovieState {}

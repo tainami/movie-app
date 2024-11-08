@@ -72,6 +72,20 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        leadingWidth: 0,
+        toolbarHeight: 70,
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            UserAvatar(),
+            NotificationIcon(),
+          ],
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: Stack(
         children: [
           const GradientBackground(),
@@ -80,21 +94,12 @@ class _HomeScreenState extends State<HomeScreen>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                AppBar(
-                  leadingWidth: 0,
-                  toolbarHeight: 70,
-                  title: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      UserAvatar(),
-                      NotificationIcon(),
-                    ],
-                  ),
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.only(
+                    top: 120,
+                    right: 16,
+                    left: 16,
+                  ),
                   child: Column(
                     children: [
                       MovieStoreBuilder(
