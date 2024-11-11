@@ -14,6 +14,8 @@ dependencies:
 
   cupertino_icons: ^1.0.8
 
+  flutter_launcher_icons: ^0.13.1
+
   google_fonts: ^6.2.1
 
   flutter_carousel_widget: ^3.1.0
@@ -23,6 +25,14 @@ dependencies:
 
   share_plus: ^10.1.1
   equatable: ^2.0.5
+
+flutter_icons:
+  image_path: "assets/icon/icon.png"
+  ios: true
+  remove_alpha_ios: true
+  android: "ic_launcher"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/icon/icon-android.png"
 
 dev_dependencies:
   flutter_test:
