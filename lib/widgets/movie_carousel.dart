@@ -78,10 +78,12 @@ class MovieCarousel extends StatelessWidget {
                       ? MovieCard.large(
                           url: movies[itemIndex].imageUrl,
                           id: movies[itemIndex].id,
+                          useNavigation: true,
                         )
                       : MovieCard.mini(
                           url: movies[itemIndex].imageUrl,
                           id: movies[itemIndex].id,
+                          useNavigation: true,
                         ),
                 );
               },

@@ -79,7 +79,9 @@ class MovieDetailContent extends StatelessWidget {
             padding: EdgeInsets.only(
               left: 16,
               right: 16,
-              top: context.percentHeight(0.4),
+              top: context.percentHeight(
+                MediaQuery.of(context).size.height > 700 ? 0.4 : 0.2,
+              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -121,13 +123,13 @@ class MovieDetailContent extends StatelessWidget {
                   tags: movie.genres.map((genre) => genre.name).toList(),
                 ),
                 const SizedBox(height: 18),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Text(
-                      movie.overview,
-                      style: context.bodyMedium,
-                      textAlign: TextAlign.justify,
-                    ),
+                Flexible(
+                  child: Text(
+                    movie.overview,
+                    style: context.bodyMedium,
+                    textAlign: TextAlign.justify,
+                    maxLines: 6,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 Padding(
@@ -141,15 +143,7 @@ class MovieDetailContent extends StatelessWidget {
                             "The Cast",
                             style: context.bodyMedium,
                           ),
-                          InkWell(
-                            onTap: () {},
-                            child: Text(
-                              "See all",
-                              style: context.bodyLarge.copyWith(
-                                color: AppColors.primary,
-                              ),
-                            ),
-                          ),
+                          const SizedBox(),
                         ],
                       ),
                       CastListBuilder(movieId: movieId),

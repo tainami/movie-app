@@ -11,6 +11,7 @@ class MovieCard extends StatelessWidget {
   final String url;
   final int id;
   final bool useRightSpacing;
+  final bool useNavigation;
   final double height;
   final double width;
 
@@ -19,6 +20,7 @@ class MovieCard extends StatelessWidget {
     this.height = MovieCardContraints.movieCardHeightMini,
     this.width = 90,
     this.useRightSpacing = true,
+    this.useNavigation = false,
     required this.url,
     required this.id,
   });
@@ -28,6 +30,7 @@ class MovieCard extends StatelessWidget {
     this.width = 140,
     this.height = MovieCardContraints.movieCardHeightLarge,
     this.useRightSpacing = true,
+    this.useNavigation = false,
     required this.url,
     required this.id,
   });
@@ -35,14 +38,16 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MovieDetailScreen(movieId: id),
-          ),
-        );
-      },
+      onTap: useNavigation
+          ? () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MovieDetailScreen(movieId: id),
+                ),
+              );
+            }
+          : null,
       child: Container(
         width: width,
         margin:

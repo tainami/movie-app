@@ -27,6 +27,7 @@ class MovieListContent extends StatelessWidget {
       final movies = (movieState as MovieStateSuccess).movies;
       if (movies.isEmpty) {
         return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Lottie.asset(
               'assets/empty.json',
@@ -56,6 +57,7 @@ class MovieListContent extends StatelessWidget {
               url: movies[index].imageUrl,
               id: movies[index].id,
               useRightSpacing: false,
+              useNavigation: true,
             );
           },
         );

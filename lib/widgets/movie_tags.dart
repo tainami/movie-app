@@ -14,7 +14,6 @@ class MovieTags extends StatelessWidget {
     return SizedBox(
       height: 30,
       child: ListView(
-        
         scrollDirection: Axis.horizontal,
         children: tags.map((tag) {
           return Padding(

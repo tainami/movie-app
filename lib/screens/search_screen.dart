@@ -76,6 +76,7 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
       ),
       body: Stack(
+        alignment: Alignment.center,
         children: [
           const GradientBackground(),
           Column(

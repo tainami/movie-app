@@ -48,6 +48,7 @@ class ListMovieGrid extends StatelessWidget {
                     url: movies[index].imageUrl,
                     id: movies[index].id,
                     useRightSpacing: false,
+                    useNavigation: true,
                   );
                 },
               ),
